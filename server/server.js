@@ -1,18 +1,17 @@
 const express = require("express");
 const app = express();
 const router = require("./router/auth-router");
+const connectDb = require("./utils/db");
 
+app.use(express.json());
+
+// Mount the Router: To use the router in your main Express app, you can "mount" it at a specific URL prefix
 app.use("/api/auth", router);
 
-// app.get("/", (req, res) => {
-//     res.status(200).send("Welcome to world best MERN series by Sanyam Lawania");
-// } );
-
-// app.get("/register", (req, res) => {
-//     res.status(200).send("Welcome to Registration Page");
-// } );
-
 const PORT = 5000;
-app.listen(PORT, () => {
-    console.log(`server is running on the port: ${PORT}`);
+
+connectDb().then( () => {
+    app.listen(PORT, () => {
+        console.log(`server is running on the port: ${PORT}`);
+    });
 });
