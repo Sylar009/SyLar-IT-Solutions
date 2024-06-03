@@ -5,42 +5,44 @@ const bcrypt = require("bcryptjs");
 // Home Logic
 // *----------------------------
 
-const home = async ( req, res) => {
-    try {
-        res
-        .status(200)
-        .send("Welcome to world best MERN series by Sanyam Lawania using controller Router");
-    } catch (error) {
-        console.log(error);
-    }
+const home = async (req, res) => {
+  try {
+    res
+      .status(200)
+      .send(
+        "Welcome to world best MERN series by Sanyam Lawania using controller Router"
+      );
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // *----------------------------
 // Registration Logic
 // *----------------------------
 
-const register = async ( req, res) => {
-    try {
-        // console.log(req.body);
-        
-        const {username, email, phone, password} = req.body;
+const register = async (req, res) => {
+  try {
+    // console.log(req.body);
 
-        const userExist = await User.findOne({email: email});
-        if (userExist) {
-            return res.status(400).send({msg:"User already exists."});
-        }
+    const { username, email, phone, password } = req.body;
 
-        // hash the password 
-        // const saltRound = 10;
-        // const hash_password = await bcrypt.hash(password, saltRound);
-
-        const userCreated = await User.create({username, email, phone, password});
-
-        res.status(200).send({msg: userCreated});
-
-    } catch (error) {
-        res.status(400).send({msg:"Page Not Found"})
+    const userExist = await User.findOne({ email: email });
+    if (userExist) {
+      return res.status(400).send({ msg: "User already exists." });
     }
+
+    const userCreated = await User.create({ username, email, phone, password });
+
+    res.status(200).json({
+        msg: "Registeration Successful",
+        token: await userCreated.generateToken(),
+        userId: userCreated._id.toString(),
+      });
+
+  } catch (error) {
+    res.status(400).send({ msg: "Page Not Found" });
+  }
 };
 
-module.exports = {home, register};
+module.exports = { home, register };
