@@ -1,27 +1,27 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-    username : {
-        type: String,
-        require: ture
+    username: {
+      type: String,
+      require: true,
     },
-    email : {
-        type: String,
-        require: ture
+    email: {
+      type: String,
+      require: true,
     },
-    phone : {
-        type: String,
-        require: ture
+    phone: {
+      type: String,
+      required: true,
     },
-    password : {
-        type: String,
-        require: ture
+    password: {
+      type: String,
+      required: true,
     },
     isAdmin: {
-        type:Boolean,
-        default: false
-    }
-});
+      type: Boolean,
+      default: false,
+    },
+  });
 
 // define the model and the collection name 
 const User = new mongoose.model("User", userSchema);
