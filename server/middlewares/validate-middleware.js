@@ -11,14 +11,25 @@
 // If you use asynchronous [refinements](https://github.com/colinhacks/zod#refine) or [transforms](https://github.com/colinhacks/zod#transform) (more on those later), you'll need to use `.parseAsync`.
 
 const validate = (schema) => async (req, res, next) => {
-    try {
-      const parseBody = await schema.parseAsync(req.body);
-      req.body = parseBody;
-      next();
-    } catch (err) {
-      console.log(err.errors[0].message);
-      res.status(400).json({ msg: err });
-    }
-  };
-  
-  module.exports = validate;
+  try {
+    const parseBody = await schema.parseAsync(req.body);
+    req.body = parseBody;
+    next();
+  } catch (err) {
+    const status = 422;
+    const message = "Fill the details properly";
+    const extraDetails = err.errors[0].message;
+
+    const error = {
+      status,
+      message,
+      extraDetails,
+    };
+
+    console.log(error);
+    //   res.status(400).json({ msg: err });
+    next(error);
+  }
+};
+
+module.exports = validate;
