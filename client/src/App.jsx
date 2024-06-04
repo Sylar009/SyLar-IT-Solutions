@@ -5,12 +5,14 @@ import { Contact } from "./pages/Contact";
 import { Service } from "./pages/Service";
 import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
+import { Navbar } from "./components/Navbar";
 
 const App = () => {
   // return <h1>Hello Mern Series By Sanyam </h1>
   return (
     <>
       <Router>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
