@@ -1,10 +1,11 @@
 import { NavLink } from "react-router-dom";
+import "./Navbar.css";
 
 export const Navbar = () => {
   return (
     <>
       <header>
-        <div className="conntainer">
+        <div className="container">
           <div className="logo-brand">
             <NavLink to="/">IT Solution</NavLink>
           </div>
