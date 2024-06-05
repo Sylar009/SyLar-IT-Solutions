@@ -34,7 +34,7 @@ export const Register = () => {
               <div className="registration-image reg-img">
                 <img
                   src="/images/register.png"
-                  alt="a nurse with a cute look"
+                  alt="lets fill the registration form"
                   width="400"
                   height="500"
                 />
