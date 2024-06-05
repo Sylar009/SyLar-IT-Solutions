@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
   const [user, setUser] = useState({
@@ -7,6 +8,8 @@ export const Register = () => {
     phone: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const handleInput = (e) => {
     console.log(e);
@@ -20,9 +23,32 @@ export const Register = () => {
   };
 
   // handle form on submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(user);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      console.log("response data : ", response);
+
+      if (response.ok) {
+        const responseData = await response.json();
+        alert("registration successful");
+        setUser({ username: "", email: "", phone: "", password: "" });
+        console.log(responseData);
+        navigate("/login");
+      } else {
+        console.log("error inside response ", "error");
+      }
+    } catch (error) {
+      console.error("Error", error);
+    }
   };
 
   return (
@@ -34,14 +60,14 @@ export const Register = () => {
               <div className="registration-image reg-img">
                 <img
                   src="/images/register.png"
-                  alt="lets fill the registration form"
+                  alt="a nurse with a cute look"
                   width="400"
                   height="500"
                 />
               </div>
               {/* our main registration code  */}
               <div className="registration-form">
-                <h1 className="main-heading ">Registration Form</h1>
+                <h1 className="main-heading mb-3">registration form</h1>
                 <br />
                 <form onSubmit={handleSubmit}>
                   <div>
