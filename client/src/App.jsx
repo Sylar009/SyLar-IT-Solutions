@@ -8,6 +8,7 @@ import { Login } from "./pages/Login";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer/Footer";
 import { Error } from "./pages/Error"
+import { Logout } from "./pages/Logout";
 
 const App = () => {
   // return <h1>Hello Mern Series By Sanyam </h1>
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/service" element={<Service />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="*" element={<Error />} />
         </Routes>
         <Footer/>
