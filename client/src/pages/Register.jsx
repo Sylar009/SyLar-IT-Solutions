@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../store/auth"
+import { useAuth } from "../store/auth";
 
 const URL = "http://localhost:5000/api/auth/register";
 
@@ -44,15 +44,18 @@ export const Register = () => {
       console.log("res from server", responseData.extraDetails);
 
       if (response.ok) {
-        
-        // alert("registration successful");
+        toast.success("registration successful");
         // stored the token in local storage
         storeTokenInLS(responseData.token);
         setUser({ username: "", email: "", phone: "", password: "" });
         console.log(responseData);
         navigate("/login");
       } else {
-        alert(responseData.extraDetails ? responseData.extraDetails : responseData.message);
+        toast.error(
+          responseData.extraDetails
+            ? responseData.extraDetails
+            : responseData.message
+        );
         console.log("error inside response ", "error");
       }
     } catch (error) {
