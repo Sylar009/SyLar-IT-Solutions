@@ -37,18 +37,18 @@ export const Login = () => {
         },
         body: JSON.stringify(user),
       });
-      console.log("login form response data : ", response);
+      const responseData = await response.json();
+      console.log("res from server", responseData.extraDetails);
 
       if (response.ok) {
-        const responseData = await response.json();
-        alert("login successful");
+        // alert("login successful");
         // stored the token in local storage
         storeTokenInLS(responseData.token);
         setUser({ email: "",  password: "" });
         console.log(responseData);
         navigate("/");
       } else {
-        alert("Invalid Credentials!");
+        alert(responseData.extraDetails ? responseData.extraDetails : responseData.message);
         console.log("Invalid Credentials! ", "error");
       }
     } catch (error) {

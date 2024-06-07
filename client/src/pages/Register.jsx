@@ -39,17 +39,20 @@ export const Register = () => {
         },
         body: JSON.stringify(user),
       });
-      console.log("register form response data : ", response);
+
+      const responseData = await response.json();
+      console.log("res from server", responseData.extraDetails);
 
       if (response.ok) {
-        const responseData = await response.json();
-        alert("registration successful");
+        
+        // alert("registration successful");
         // stored the token in local storage
         storeTokenInLS(responseData.token);
         setUser({ username: "", email: "", phone: "", password: "" });
         console.log(responseData);
         navigate("/login");
       } else {
+        alert(responseData.extraDetails ? responseData.extraDetails : responseData.message);
         console.log("error inside response ", "error");
       }
     } catch (error) {
