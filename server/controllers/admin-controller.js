@@ -17,6 +17,19 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+// *-------------------------------
+//* user delete Logic 📝
+// *-------------------------------
+
+const deleteUserById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await User.deleteOne({ _id: id });
+    return res.status(200).json({ message: "User Deleted Successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
 
 // *-------------------------------
 //* getAllContacts Logic 📝
@@ -37,5 +50,6 @@ const getAllContacts = async (req, res) => {
 
 module.exports = {
   getAllUsers,
+  deleteUserById,
   getAllContacts
 };
