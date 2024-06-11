@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../store/auth";
+import { Link } from "react-router-dom";
 
 export const AdminUsers = () => {
   const [users, setUsers] = useState([]);
@@ -25,12 +26,15 @@ export const AdminUsers = () => {
   //   delelte the user on delete button
   const deleteUser = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/users/delete/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: authorizationToken,
-        },
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/admin/users/delete/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: authorizationToken,
+          },
+        }
+      );
       const data = await response.json();
       console.log(`users after delete:  ${data}`);
 
@@ -69,7 +73,9 @@ export const AdminUsers = () => {
                     <td>{curUser.username}</td>
                     <td>{curUser.email}</td>
                     <td>{curUser.phone}</td>
-                    <td>Edit</td>
+                    <td>
+                      <Link to={`/admin/users/${curUser._id}/edit`}>Edit</Link>
+                    </td>
                     <td>
                       <button
                         className="btn"
