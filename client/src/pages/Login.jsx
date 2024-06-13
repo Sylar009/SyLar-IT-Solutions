@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
 
-const URL = "http://localhost:5000/api/auth/login";
-
 export const Login = () => {
   const [user, setUser] = useState({
     email: "",
@@ -12,7 +10,9 @@ export const Login = () => {
   });
 
   const navigate = useNavigate();
-  const { storeTokenInLS } = useAuth();
+  const { storeTokenInLS, API } = useAuth();
+
+  const URL = `${API}/api/auth/login`;
 
   // let handle the input field value
   const handleInput = (e) => {
@@ -70,7 +70,7 @@ export const Login = () => {
               <div className="registration-image reg-img">
                 <img
                   src="/images/login.png"
-                  alt="let fill the login form"
+                  alt=" let's fill the login form "
                   width="500"
                   height="500"
                 />
@@ -79,15 +79,19 @@ export const Login = () => {
               <div className="registration-form">
                 <h1 className="main-heading mb-3">Login form</h1>
                 <br />
+
                 <form onSubmit={handleSubmit}>
                   <div>
                     <label htmlFor="email">email</label>
                     <input
-                      type="text"
+                      type="email"
                       name="email"
+                      placeholder="enter your email"
+                      id="email"
+                      required
+                      autoComplete="off"
                       value={user.email}
                       onChange={handleInput}
-                      placeholder="email"
                     />
                   </div>
 
@@ -96,11 +100,15 @@ export const Login = () => {
                     <input
                       type="password"
                       name="password"
+                      placeholder="password"
+                      id="password"
+                      required
+                      autoComplete="off"
                       value={user.password}
                       onChange={handleInput}
-                      placeholder="password"
                     />
                   </div>
+
                   <br />
                   <button type="submit" className="btn btn-submit">
                     Login Now

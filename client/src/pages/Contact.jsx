@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../store/auth";
+import { toast } from "react-toastify";
 
 const defaultContactFormData = {
   username: "",
@@ -7,13 +8,12 @@ const defaultContactFormData = {
   message: "",
 };
 
-// type UserAuth = boolean;
 export const Contact = () => {
   const [contact, setContact] = useState(defaultContactFormData);
 
   const [userData, setUserData] = useState(true);
 
-  const { user } = useAuth();
+  const { user, API } = useAuth();
 
   if (userData && user) {
     setContact({
@@ -21,6 +21,7 @@ export const Contact = () => {
       email: user.email,
       message: "",
     });
+
     setUserData(false);
   }
 
@@ -39,9 +40,8 @@ export const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(contact);
     try {
-      const response = await fetch("http://localhost:5000/api/form/contact", {
+      const response = await fetch(`${API}/api/form/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,20 +49,15 @@ export const Contact = () => {
         body: JSON.stringify(contact),
       });
 
-      console.log("response: ", response);
-      // alert(response);
-
       if (response.ok) {
         setContact(defaultContactFormData);
-        const responseData = await response.json();
-        alert(responseData);
-        console.log(responseData);
-      } else {
-        // Handle API error here
-        console.error("API Error:", response.status, response.statusText);
+        const data = await response.json();
+        console.log(data);
+        toast.success("Message send successfully");
       }
     } catch (error) {
-      console.error(error);
+      toast.error("Message not send");
+      console.log(error);
     }
   };
 
