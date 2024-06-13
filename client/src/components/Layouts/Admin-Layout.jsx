@@ -1,8 +1,20 @@
 import { NavLink, Outlet, Navigate } from "react-router-dom";
 import { FaUser, FaHome, FaRegListAlt } from "react-icons/fa";
 import { FaMessage } from "react-icons/fa6";
+import { useAuth } from "../../store/auth";
 
 export const AdminLayout = () => {
+  const { user, isLoading } = useAuth();
+  console.log("admin layout ", user);
+
+  if (isLoading) {
+    return <h1>Loading ...</h1>;
+  }
+
+  if (!user.isAdmin) {
+    console.log("User is not an ADMIN ...... redirecting to HOME PAGE!!!!")
+    return <Navigate to="/" />;
+  }
 
   return (
     <>
@@ -12,7 +24,7 @@ export const AdminLayout = () => {
             <ul>
               <li>
                 <NavLink to="/admin/users">
-                  <FaUser /> Users
+                  <FaUser /> users
                 </NavLink>
               </li>
               <li>
